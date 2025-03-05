@@ -6,7 +6,7 @@
 
 <script setup>
 import {ref, onMounted} from 'vue';
-import {useRoute} frp, 'vue-router';
+import {useRoute} from 'vue-router';
 
 const route = useRoute();
 const crimes = ref("");
