@@ -5,12 +5,14 @@ import HelloWorld from './components/CardContainer.vue'
 
 <template>
   <header>
+   <!--  Crime Rate Trends Over Time -->
 
     <div class="wrapper">
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/pieChart">Pie Charts</RouterLink>
+
       </nav>
     </div>
   </header>
