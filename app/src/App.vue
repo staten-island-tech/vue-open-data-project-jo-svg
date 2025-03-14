@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/CardContainer.vue'
 </script>
 
 <template>
@@ -11,7 +10,6 @@ import HelloWorld from './components/CardContainer.vue'
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/pieChart">Pie Charts</RouterLink>
         <RouterLink to="/GameGuesser">Game Guesser</RouterLink>
         
       </nav>
