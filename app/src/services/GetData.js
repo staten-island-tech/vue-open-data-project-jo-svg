@@ -1,6 +1,6 @@
 export async function getCrimes() {
     try {
-      const response = await fetch('https://data.cityofnewyork.us/resource/bqiq-cu78.json');
+      const response = await fetch('https://data.cityofnewyork.us/resource/jb7j-dtam.json');
   
       if (response.status !== 200) {
         throw new Error(`Error: ${response.statusText}`);

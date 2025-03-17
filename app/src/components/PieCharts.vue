@@ -47,11 +47,6 @@ const options = {
     }
   }
 };
-const config = {
-  type: 'doughnut',
-  data: data,
-  options: options
-};
 </script>
 
 <style scoped>

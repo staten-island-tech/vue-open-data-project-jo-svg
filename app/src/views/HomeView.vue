@@ -2,7 +2,7 @@
 <div class=" h-screen w-[100%] bg-amber-800 flex flex-row justify-evenly">
     <div class="w-1/6 h-full flex flex-col justify-evenly">
         <YearSelector/>
-        <MonthSelector/>
+        <GenderRaceSelector/>
     </div>
 
     <div class="w-4/5 my-auto h-11/12 bg-amber-100">
@@ -14,7 +14,7 @@
 
 <script setup>
 import YearSelector from '@/components/YearSelector.vue';
-import MonthSelector from '@/components/MonthSelector.vue';
+import GenderRaceSelector from '@/components/GenderRaceSelector.vue';
 import PieCharts from '@/components/PieCharts.vue';
 import { getCrimes } from '@/services/GetData';
 import {reactive, onMounted} from 'vue';
