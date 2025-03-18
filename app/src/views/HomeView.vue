@@ -16,14 +16,14 @@
 import YearSelector from '@/components/YearSelector.vue';
 import GenderRaceSelector from '@/components/GenderRaceSelector.vue';
 import PieCharts from '@/components/PieCharts.vue';
-import { getCrimes } from '@/services/GetData';
+import { getData } from '@/services/GetData';
 import {reactive, onMounted} from 'vue';
 
 const data = reactive([]);
 
 async function loadData() {
     try {
-    data.push(...(await getCrimes())); // Spread opperator, takes the array from getCrimes and puts it in data
+    data.push(...(await getData())); // Spread opperator, takes the array from getCrimes and puts it in data
   } catch (error) {
     alert('Failed to load data');
   }
