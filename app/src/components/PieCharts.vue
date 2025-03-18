@@ -1,54 +1,54 @@
 <template>
-    <Bar :data="data" :options="options" />
-  <!-- you put chart here based off of the amount of crimes 
-  made in this year and month -->
-  
+  <!-- Pie chart component -->
+  <Pie :data="data" :options="options" />
+  <!-- <Bar :data="data" :options="options" /> -->
 </template>
 
 <script setup>
-import { defineProps, ref} from 'vue';
+import { defineProps, ref } from 'vue';
+import { Pie } from 'vue-chartjs';
 import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+/* import {getCrimes} from '/src/service/GetData.js'; */
+function gatherAllTypesOfDeaths(){
 
-defineProps ({
-  
-})
+}
+
+// Register the necessary components for Pie charts
+ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 const data = ref({
   labels: ['Red', 'Blue', 'Yellow'],
-  datasets: [{
-    label: 'Test Dataset',
-    data: [10, 20, 30],
-    backgroundColor: ['#FF5733', '#33FF57', '#3357FF']
-  }]
+  datasets: [
+    {
+      label: 'Crime Count',
+      data: [300, 50, 100],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+      ],
+      hoverOffset: 8,
+    },
+  ],
 });
+
 const options = {
   responsive: true,
   plugins: {
     title: {
       display: true,
-      text: 'Sample Bar Chart'
+      text: 'Crime Distribution by Category',
     },
     tooltip: {
       callbacks: {
-        label: function(tooltipItem) {
+        label: function (tooltipItem) {
           return `Value: ${tooltipItem.raw}`;
-        }
-      }
-    }
-  },
-  scales: {
-    x: {
-      beginAtZero: true
+        },
+      },
     },
-    y: {
-      beginAtZero: true
-    }
-  }
+  },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

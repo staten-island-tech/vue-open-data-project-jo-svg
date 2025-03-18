@@ -5,7 +5,7 @@
         <GenderRaceSelector/>
     </div>
 
-    <div class="w-4/5 my-auto h-11/12 bg-amber-100">
+    <div class="w-4/5 my-auto h-11/12 justify-center items-center flex py-4 bg-amber-100">
         <PieCharts/>
     </div>
 </div>
