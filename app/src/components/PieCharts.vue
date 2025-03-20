@@ -9,25 +9,28 @@ import { ref, onMounted } from 'vue';
 import { Pie } from 'vue-chartjs';
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-import { getDeathTypes } from '@/services/GetData';
-import { getData, data, deathTypes } from '@/services/GetData';
-/* import {getCrimes} from '/src/service/GetData.js'; */
+import { getData, data, getBoroughs, boroughs} from '@/services/GetData';
 
 
 onMounted(async ()=>{ 
   await getData();
-  await getDeathTypes();
+  await getBoroughs();
 })
 
-
+function getTheAmountOfPeople(){
+  array.forEach(person => {
+    
+  });
+}
+console.log(data);
 // Register the necessary components for Pie charts
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 const data1 = ref({
-  labels: deathTypes,
+  labels: boroughs,
   datasets: [
     {
-      label: 'Crime Count',
+      label: 'HIV thing',
       data: [300, 50, 100],
       backgroundColor: [
         'rgb(255, 99, 132)',
