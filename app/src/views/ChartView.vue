@@ -3,44 +3,41 @@
     <div class="w-1/6 h-full flex flex-col justify-evenly">
         <YearSelector/>
         <div class="h-6/8 bg-amber-400 flex flex-col items-center justify-evenly">
-            <RaceSelector :selected="raceSelected" @update:selected="updateraceSelected"/>
-            genderSelected
+            <RaceSelector :selected="raceSelected" @update:raceSelected="setRace"/>
+            <genderSelector :selected="genderSelected" @update:genderSelected="setGender"/>
         </div>
-        
-        
     </div>
-
     <div class="w-4/5 my-auto h-11/12 justify-center items-center flex py-4 bg-amber-100">
         <PieCharts/>
     </div>
 </div>
-
 </template>
 
 <script setup>
 import YearSelector from '@/components/YearSelector.vue';
-import raceSelected from '@/components/RaceSelector.vue';
-import genderSelected from '@/components/GenderSelector.vue';
+import RaceSelector from '@/components/RaceSelector.vue';
+import genderSelector from '@/components/GenderSelector.vue';
 import PieCharts from '@/components/PieCharts.vue';
 import { getData } from '@/services/GetData';
-import {reactive, onMounted, ref} from 'vue';
-
+import {reactive, onMounted} from 'vue';
+import { raceSelected, genderSelected, setRace, setGender } from '@/services/StoreStuff';
 const data = reactive([]);
-const raceSelected = ref("");
-const genderSelected = ref("");
+
+
+
+
 async function loadData() {
-    try {
-    data.push(...(await getData())); // Spread opperator, takes the array from getCrimes and puts it in data
+  try {
+    await getData(); // fetch data and update the data array directly
+    console.log("Data loaded successfully:", data);
   } catch (error) {
     alert('Failed to load data');
+    console.error("Error loading data:", error);
   }
 }
-
 onMounted(()=>{
     loadData();
 });
-console.log(data);
-
 </script>
 
 <style scoped>

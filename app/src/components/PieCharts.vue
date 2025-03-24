@@ -1,47 +1,23 @@
 <template>
   <!-- Pie chart component -->
-  <Pie :data="data1" :options="options" />
+  <button>pie</button>
+  <button>bar</button>
+  <Pie v-if="dataLoaded" :key="dataLoaded" :data="data1" :options="options" />
   <!-- <Bar :data="data" :options="options" /> -->
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick} from 'vue';
 import { Pie } from 'vue-chartjs';
 import { Bar } from 'vue-chartjs';
+import { genderSelected, raceSelected } from '@/services/StoreStuff';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { getData, data, getBoroughs, boroughs} from '@/services/GetData';
 
-
-onMounted(async ()=>{ 
-  await getData();
-  await getBoroughs();
-})
-
-function getTheAmountOfPeople(){
-  array.forEach(person => {
-    
-  });
-}
-console.log(data);
 // Register the necessary components for Pie charts
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
-
-const data1 = ref({
-  labels: boroughs,
-  datasets: [
-    {
-      label: 'HIV thing',
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-      ],
-      hoverOffset: 8,
-    },
-  ],
-});
-
+const data1 = ref(null);
+const dataLoaded = ref(false);
 const options = {
   responsive: true,
   plugins: {
@@ -58,6 +34,54 @@ const options = {
     },
   },
 };
+function getTheAmountOfPeople(area, gender, race){
+  let amount = 0;
+  data.forEach(person => {
+    if (
+      (person.borough === area) &&
+      (gender ? person.sex === gender : true) &&  // Only filter by gender if it's set
+      (race ? person.race === race : true)      // Only filter by race if it's set
+    ){
+      amount++;
+    };
+  });
+  return amount;
+}
+function updateChartData() {
+  const newData = {
+    labels: boroughs,
+    datasets: [
+      {
+        label: 'HIV Diagnoses by Category',
+        data: boroughs.map(borough => getTheAmountOfPeople(borough, genderSelected.value, raceSelected.value)),
+        backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+        hoverOffset: 8,
+      },
+    ],
+  };
+  console.log("yes",data1);
+  data1.value = newData;
+  nextTick(() => {
+    dataLoaded.value = true;
+  });
+}
+onMounted(async () => {
+  try {
+    await getData();
+    await getBoroughs();
+    updateChartData();
+    dataLoaded.value = true;
+    console.log("yes",data1);
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
+});
+watch([genderSelected, raceSelected], () => {
+  console.log("Watch triggered...");
+  console.log("genderSelected in watch:", genderSelected.value);
+  console.log("raceSelected in watch:", raceSelected.value);
+  updateChartData();
+});
 </script>
 
 <style scoped></style>
