@@ -1,8 +1,8 @@
 <template>
-<div class="years section bg-amber-500 h-1/7 flex items-center justify-center">
-    <button @click="changenum('<')" class="btn-circle cursor-pointer"><</button>
+<div class="years section bg-amber-100 h-1/7 flex flex-row items-center justify-center list rounded-box shadow-md">
+    <button @click="changenum('<')" class="btn-circle cursor-pointer text-4xl"><</button>
     <h1 class=" text-8xl">{{year}}</h1>
-    <button @click="changenum('>')" class="btn-circle cursor-pointer">></button>
+    <button @click="changenum('>')" class="btn-circle cursor-pointer text-4xl">></button>
 </div>
 </template>
 

@@ -1,22 +1,34 @@
 <template>
   <!-- Pie chart component -->
-  <button>pie</button>
-  <button>bar</button>
-  <Pie v-if="dataLoaded" :key="dataLoaded" :data="data1" :options="options" />
+   <div class="flex absolute top-1/6 right-10">
+    <button class="btn" @click="chartType = 'pie'">Pie Chart</button>
+    <button class="btn" @click="chartType = 'bar'">Bar Chart</button>
+   </div>
+  
+
+  
+    <Pie v-if="dataLoaded && chartType==='pie'" :data="data1" :options="options" />
+  
+    
+      <Bar v-if="dataLoaded && chartType==='bar'" :data="data1" :options="options" />
+  
+    
+
   <!-- <Bar :data="data" :options="options" /> -->
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick} from 'vue';
-import { Pie } from 'vue-chartjs';
-import { Bar } from 'vue-chartjs';
+import { ref, onMounted, computed} from 'vue';
+import { Pie, Bar } from 'vue-chartjs';
 import { genderSelected, raceSelected } from '@/services/StoreStuff';
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { getData, data, getBoroughs, boroughs} from '@/services/GetData';
 import { year } from '@/services/StoreStuff';
 // Register the necessary components for Pie charts
-ChartJS.register(Title, Tooltip, Legend, ArcElement);
-const data1 = ref(null);
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+// Register the necessary chart.js components
+ChartJS.register(Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale);
+const chartType = ref('pie');  
 const dataLoaded = ref(false);
 const options = {
   responsive: true,
@@ -34,52 +46,48 @@ const options = {
     },
   },
 };
-function getTheAmountOfPeople(area, year, gender, race){
-  let amount = 0;
+function getTheAmountOfPeople(yearValue, gender, race){
+  const people = [];
   data.forEach(person => {
     if (
-      (person.borough === area) &&
-      (person.year === year) &&
-      (gender ? person.sex === gender : true) &&  // Only filter by gender if it's set
-      (race ? person.race === race : true)      // Only filter by race if it's set
+      String(yearValue).trim().includes(person.year) &&
+      (gender ? gender === (person.sex):true) &&
+      (race ? race === (person.race):true)
     ){
-      amount++;
+      people.push(person);
     };
   });
-  return amount;
+  console.log(people);
+  return people;
 }
-function updateChartData() {
+
+const data1 = computed(() => {
   const newData = {
     labels: boroughs,
     datasets: [
       {
         label: 'HIV Diagnoses by Category',
-        data: boroughs.map(borough => getTheAmountOfPeople(borough, year.value, genderSelected.value, raceSelected.value)),
+        data: boroughs.map(borough =>
+        {const filteredByBorough = getTheAmountOfPeople(year.value, genderSelected.value, raceSelected.value)
+            .filter(item => item.borough === borough);
+            return filteredByBorough.length/2;}
+        ),
         backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
         hoverOffset: 8,
       },
     ],
   };
-  console.log("yes",data1);
-  data1.value = newData;
-  nextTick(() => {dataLoaded.value = true;});
-}
+  return newData;
+});
+
 onMounted(async () => {
   try {
     await getData();
     await getBoroughs();
-    updateChartData();
     dataLoaded.value = true;
-    console.log("yes",data1);
   } catch (error) {
     console.error('Error loading data:', error);
   }
-});
-watch([genderSelected, raceSelected], () => {
-  console.log("Watch triggered...");
-  console.log("genderSelected in watch:", genderSelected.value);
-  console.log("raceSelected in watch:", raceSelected.value);
-  updateChartData();
 });
 </script>
 

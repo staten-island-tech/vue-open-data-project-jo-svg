@@ -1,6 +1,7 @@
 <template>
-    <div class="">
-        <div class="dropdown dropdown-hover">
+  <div class="bg-amber-400 overflow-scroll">
+    <div class="flex flex-row justify-center w-1/5 justify-self-center m-3">
+        <div class="dropdown dropdown-hover ">
             <div tabindex="0" role="button" class="btn m-1">Gender</div>
             <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                 <li v-for="gender in genders" @click="check(gender)"><a>{{gender}}</a></li>
@@ -12,8 +13,10 @@
                 <li v-for="race in races" @click="check(race)"><a>{{race}}</a></li>
             </ul>
         </div>
-        <PutCards/>
+        
     </div>
+    <PutCards/>
+  </div>
 </template>
 
 <script>
@@ -34,15 +37,15 @@ const genders = [
 const races = [
   "Black",
   "White",
-  "Asian/Pacific Islander",
+  "Asian/Pacific\nIslander",
   "Latino/Hispanic",
   "Other/Unknown",
 ];
 
 function check(cat){
     if (races.includes(cat)){
-        raceSelected.value = cat;
-        console.log(raceSelected.value);
+      raceSelected.value = cat;
+      console.log(raceSelected.value);
     }
     else if (genders.includes(cat)){
         genderSelected.value = cat;

@@ -4,7 +4,7 @@ export const data = reactive([]);
 export const boroughs = reactive([]);
 export async function getData() {
     try {
-      const response = await fetch('https://data.cityofnewyork.us/resource/ykvb-493p.json');
+      const response = await fetch('https://data.cityofnewyork.us/resource/ykvb-493p.json?$limit=500');
       /* use if needed ?$limit=200 */
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);

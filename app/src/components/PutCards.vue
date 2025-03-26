@@ -1,16 +1,19 @@
 <template>
-    
-    <div class="flex flex-wrap justify-around align-middle h-screen ">
-        <div v-for="person in filteredData" 
-        :key = "person.id"
-        class="mt-10 w-[23%] bg-red-600">
-            <h1>race: {{ person.race }}</h1>
-            <h1>sex: {{ person.sex }}</h1>
-            <h1>borough: {{ person.borough }}</h1>
-            <h1>year: {{ person.year }}</h1>
-            <h1>hiv_diagnoses_num: {{ person.hiv_diagnoses_num }}</h1>
-            <h1>aids_diagnoses_num: {{ person.aids_diagnoses_num }}</h1>
+    <div class="flex flex-wrap justify-around align-middle h-screen gap-y-6">
+      <div  v-for="person in filteredData" 
+      :key = "person.id"
+      class="card bg-base-100 w-96 shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title">Borough: {{ person.borough }}</h1>
+            <h1>Race: {{ person.race }}</h1>
+            <h1>Sex: {{ person.sex }}</h1>
+            <h1>Year: {{ person.year }}</h1>
+          <div class="card-actions justify-start">
+            <button class="btn btn-primary">HIV Diagnoses Number: {{ person.hiv_diagnoses_num }}</button>
+            <button class="btn btn-primary">AIDS Diagnoses Number: {{ person.aids_diagnoses_num }}</button>
+          </div>
         </div>
+      </div>
     </div>
 
 </template>
