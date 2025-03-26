@@ -35,7 +35,7 @@ const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Crime Distribution by Category',
+      text: 'HIV Diagnoses by Category',
     },
     tooltip: {
       callbacks: {
@@ -66,7 +66,7 @@ const data1 = computed(() => {
     labels: boroughs,
     datasets: [
       {
-        label: 'HIV Diagnoses by Category',
+        label: boroughs,
         data: boroughs.map(borough =>
         {const filteredByBorough = getTheAmountOfPeople(year.value, genderSelected.value, raceSelected.value)
             .filter(item => item.borough === borough);
