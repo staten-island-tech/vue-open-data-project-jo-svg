@@ -13,7 +13,7 @@ import { Bar } from 'vue-chartjs';
 import { genderSelected, raceSelected } from '@/services/StoreStuff';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { getData, data, getBoroughs, boroughs} from '@/services/GetData';
-
+import { year } from '@/services/StoreStuff';
 // Register the necessary components for Pie charts
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 const data1 = ref(null);
@@ -34,11 +34,12 @@ const options = {
     },
   },
 };
-function getTheAmountOfPeople(area, gender, race){
+function getTheAmountOfPeople(area, year, gender, race){
   let amount = 0;
   data.forEach(person => {
     if (
       (person.borough === area) &&
+      (person.year === year) &&
       (gender ? person.sex === gender : true) &&  // Only filter by gender if it's set
       (race ? person.race === race : true)      // Only filter by race if it's set
     ){
@@ -53,7 +54,7 @@ function updateChartData() {
     datasets: [
       {
         label: 'HIV Diagnoses by Category',
-        data: boroughs.map(borough => getTheAmountOfPeople(borough, genderSelected.value, raceSelected.value)),
+        data: boroughs.map(borough => getTheAmountOfPeople(borough, year.value, genderSelected.value, raceSelected.value)),
         backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
         hoverOffset: 8,
       },
@@ -61,9 +62,7 @@ function updateChartData() {
   };
   console.log("yes",data1);
   data1.value = newData;
-  nextTick(() => {
-    dataLoaded.value = true;
-  });
+  nextTick(() => {dataLoaded.value = true;});
 }
 onMounted(async () => {
   try {

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+
 const races = [
   "Black Non-Hispanic",
   "White Non-Hispanic",

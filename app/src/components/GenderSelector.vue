@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
 const genders = [
   "Female",
   "Male",

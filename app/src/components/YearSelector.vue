@@ -8,7 +8,7 @@
 
 <script setup>
 import {ref} from "vue";
-const year = ref(2014);
+import { year } from "@/services/StoreStuff";
 function changenum(btn){
     if (btn === ">"){
         year.value += 1;

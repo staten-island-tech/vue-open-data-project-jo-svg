@@ -7,3 +7,4 @@ export function setGender(gender) {
 export function setRace(race) {
     raceSelected.value = race;
 }
+export const year = ref(2014);
